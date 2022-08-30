@@ -18,7 +18,6 @@ godeclutter will perform the following steps on your URL host section:
 
 
 # Install
-[insert]
 
 ```bash
 go install github.com/c3l3si4n/godeclutter@latest
