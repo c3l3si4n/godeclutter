@@ -17,7 +17,7 @@ var preferHttpsFlag = flag.Bool("p", false, "Prefer HTTPS - If there's a https u
 var normalizeURLFlag = flag.Bool("c", true, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
 var blacklistExtensionsFlag = flag.Bool("b", true, "Blacklist Extensions - clean some uninteresting extensions.")
 
-var blacklistedExtensions = []string{"css", "png", "jpg", "jpeg", "svg", "ico", "webp", "ttf", "otf", "woff", "gif", "pdf", "bmp", "eot", "mp3", "woff2", "mp4", "avi"}
+var blacklistedExtensions = []string{"css", "scss", "png", "jpg", "jpeg", "img", "svg", "ico", "webp", "webm", "tif", "ttf", "tiff", "otf", "woff", "woff2", "gif", "pdf", "bmp", "eot", "mp3", "mp4", "m4a", "m4p", "avi", "flv", "swf", "eot"}, , 
 
 func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
