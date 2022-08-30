@@ -10,8 +10,9 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/purell"
-)
+	"github.com/jfcg/sorty/v2"
 
+)
 // var strFlag = flag.String("long-string", "", "Description")
 var preferHttpsFlag = flag.Bool("p", false, "Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)")
 var normalizeURLFlag = flag.Bool("c", false, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
@@ -21,10 +22,17 @@ var blacklistedExtensions = []string{"css", "png", "jpg", "jpeg", "svg", "ico", 
 
 func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
+	var inputSlice []string
 	for scanner.Scan() {
-		c <- scanner.Text()
+		inputSlice = append(inputSlice, scanner.Text() )
 	}
-	close(c)
+	sorty.SortSlice(inputSlice);
+	for i := len(inputSlice)-1; i >= 0; i-- {
+		fmt.Println(inputSlice[i])
+		c <- inputSlice[i]
+	 }
+	 
+	 close(c)
 }
 
 func removeDuplicateStr(strSlice []string) []string {
