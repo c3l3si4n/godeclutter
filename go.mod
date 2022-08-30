@@ -1,4 +1,4 @@
-module godeclutter
+module github.com/c3l3si4n/godeclutter
 
 go 1.17
 
