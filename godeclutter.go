@@ -18,8 +18,10 @@ var normalizeURLFlag = flag.Bool("c", true, "Clean URLs - Aggressively clean/nor
 var blacklistExtensionsFlag = flag.Bool("be", true, "Blacklist Extensions - clean some uninteresting extensions.")
 var blacklistWordsFlag = flag.Bool("bw", true, "Blacklist Words - clean some uninteresting words.")
 
-var blacklistedExtensions = []string{"css", "png", "jpg", "jpeg", "svg", "ico", "webp", "ttf", "otf", "woff", "gif", "pdf", "bmp", "eot", "mp3", "woff2", "mp4", "avi"}
+
 var blacklistedWords = []string{"node_modules", "jquery", "bootstrap", "wp-includes"}
+var blacklistedExtensions = []string{"css", "scss", "png", "jpg", "jpeg", "img", "svg", "ico", "webp", "webm", "tif", "ttf", "tiff", "otf", "woff", "woff2", "gif", "pdf", "bmp", "eot", "mp3", "mp4", "m4a", "m4p", "avi", "flv", "swf", "eot"} 
+
 
 func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
