@@ -10,25 +10,19 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/purell"
-	"github.com/jfcg/sorty/v2"
 )
 
 // var strFlag = flag.String("long-string", "", "Description")
 var preferHttpsFlag = flag.Bool("p", false, "Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)")
-var normalizeURLFlag = flag.Bool("c", false, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
+var normalizeURLFlag = flag.Bool("c", true, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
 var blacklistExtensionsFlag = flag.Bool("b", true, "Blacklist Extensions - clean some uninteresting extensions.")
 
 var blacklistedExtensions = []string{"css", "png", "jpg", "jpeg", "svg", "ico", "webp", "ttf", "otf", "woff", "gif", "pdf", "bmp", "eot", "mp3", "woff2", "mp4", "avi"}
 
 func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
-	var inputSlice []string
 	for scanner.Scan() {
-		inputSlice = append(inputSlice, scanner.Text())
-	}
-	sorty.SortSlice(inputSlice)
-	for i := len(inputSlice) - 1; i >= 0; i-- {
-		c <- inputSlice[i]
+		c <- scanner.Text()
 	}
 
 	close(c)
@@ -137,10 +131,6 @@ func main() {
 			}
 		}
 
-		if *normalizeURLFlag {
-			u, _ = url.Parse(normalizeURL(u.String()))
-		}
-
 		if *blacklistExtensionsFlag {
 			foundBlacklisted := false
 			for _, ext := range blacklistedExtensions {
@@ -154,7 +144,14 @@ func main() {
 			}
 		}
 
-		processedUrls = append(processedUrls, u.String())
+		if *normalizeURLFlag {
+			u_str := normalizeURL(u.String())
+			processedUrls = append(processedUrls, u_str)
+		} else {
+			processedUrls = append(processedUrls, u.String())
+
+		}
+
 	}
 
 	filteredProcessedUrls := removeDuplicateStr(processedUrls)
