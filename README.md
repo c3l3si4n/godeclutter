@@ -71,9 +71,17 @@ https://1.1.1.1/a.js
 ```bash
 $> ./godeclutter -h
 Usage of ./godeclutter:
-  -be	Blacklist Extensions - clean some uninteresting extensions. (default true)
-  -bw	Blacklist words - clean some uninteresting words. (default true)
-  -c	Clean URLs - Aggressively clean/normalize URLs before outputting them.
+  -be
+    	Blacklist Extensions - clean some uninteresting extensions. (default true)
+  -bec string
+    	Blacklist Extensions - Specify additional extensions separated by commas to be cleared along the default ones.
+  -bw
+    	Blacklist Words - clean some uninteresting words. (default true)
+  -bwc string
+    	Blacklist Words - Specify additional words separated by commas  to be cleared along the default ones.
+  -bwl string
+    	Blacklist Words - Defines the level of word blocking. Values can be: minimal,aggressive (default "minimal")
+  -c	Clean URLs - Aggressively clean/normalize URLs before outputting them. (default true)
   -p	Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)
 ```
 
