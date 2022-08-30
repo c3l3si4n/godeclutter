@@ -15,9 +15,13 @@ import (
 // var strFlag = flag.String("long-string", "", "Description")
 var preferHttpsFlag = flag.Bool("p", false, "Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)")
 var normalizeURLFlag = flag.Bool("c", true, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
-var blacklistExtensionsFlag = flag.Bool("b", true, "Blacklist Extensions - clean some uninteresting extensions.")
+var blacklistExtensionsFlag = flag.Bool("be", true, "Blacklist Extensions - clean some uninteresting extensions.")
+var blacklistWordsFlag = flag.Bool("bw", true, "Blacklist Words - clean some uninteresting words.")
 
+
+var blacklistedWords = []string{"node_modules", "jquery", "bootstrap", "wp-includes"}
 var blacklistedExtensions = []string{"css", "scss", "png", "jpg", "jpeg", "img", "svg", "ico", "webp", "webm", "tif", "ttf", "tiff", "otf", "woff", "woff2", "gif", "pdf", "bmp", "eot", "mp3", "mp4", "m4a", "m4p", "avi", "flv", "swf", "eot"} 
+
 
 func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
@@ -132,14 +136,27 @@ func main() {
 		}
 
 		if *blacklistExtensionsFlag {
-			foundBlacklisted := false
+			foundBlacklistedExtension := false
 			for _, ext := range blacklistedExtensions {
 				if strings.HasSuffix(u.Path, ext) {
-					foundBlacklisted = true
+					foundBlacklistedExtension = true
 					continue
 				}
 			}
-			if foundBlacklisted {
+			if foundBlacklistedExtension {
+				continue
+			}
+		}
+
+		if *blacklistWordsFlag {
+			foundBlacklistedWord := false
+			for _, word := range blacklistedWords {
+				if strings.Contains(u.Path, word) {
+					foundBlacklistedWord = true
+					continue
+				}
+			}
+			if foundBlacklistedWord {
 				continue
 			}
 		}
