@@ -9,6 +9,7 @@ godeclutter will perform the following steps on your URL host section:
 - Clean port notation of URLs pointing to the default protocol ports, since those ports are already implied by the protocol scheme. (such as :443 and :80)
 - Clean http:// URLs if a https:// to the same host and port is present, since 99,9% of those cases will just be a redirect to https://.
 - Remove uninteresting media extensions such as png, jpg, css, etc. (This one will keep .js files since those are sometimes interesting)
+- Remove urls with uninteresting words such as bootstrap, jquery, node_modules, etc.
 - Sort query parameters
 - Lowercase all schemes and hostnames, since upper-casing is irrelevant for those.
 - Replace all lower-case URI encoding escapes to upper-case, to maintain a standard.
@@ -71,7 +72,8 @@ arch ~>
 ```bash
 $> ./godeclutter -h
 Usage of ./godeclutter:
-  -b	Blacklist Extensions - clean some uninteresting extensions. (default true)
+  -be	Blacklist Extensions - clean some uninteresting extensions. (default true)
+  -bw	Blacklist words - clean some uninteresting words. (default true)
   -c	Clean URLs - Aggressively clean/normalize URLs before outputting them.
   -p	Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)
 ```
