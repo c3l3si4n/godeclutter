@@ -21,7 +21,7 @@ godeclutter will perform the following steps on your URL host section:
 # Install
 
 ```bash
-go install github.com/c3l3si4n/godeclutter@latest
+go install github.com/c3l3si4n/godeclutter@HEAD
 ```
 
 # Basic Usage
