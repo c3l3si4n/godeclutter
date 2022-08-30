@@ -26,6 +26,33 @@ go install github.com/c3l3si4n/godeclutter@latest
 # Basic Usage
 You can send URLs by sending them to stdin.
 ```bash
+$> cat test_urls.txt
+https://1.1.1.1:443/
+http://1.1.1.1/
+http://1.1.1.1:80/
+https://1.1.1.1:443/
+https://1.1.1.1:80/
+https://1.1.1.1:8443/
+https://1.1.1.1:8443/
+https://1.1.1.1:443/
+https://1.1.1.1:8443/
+https://1.1.1.1:8443/
+https://1.1.1.1:443/?
+http://1.1.1.1:443/?
+https://1.1.1.1:80/?a
+https://1.1.1.1:443/?
+https://1.1.1.1:443/?
+https://1.1.1.1:443/?1=1
+https://1.1.1.1:443/?a=a&b=1
+https://1.1.1.1:443/?a=a&b=1
+https://1.1.1.1:443/a.js?a=a&b=1
+https://1.1.1.1:443/fiqef.html?a=a&b=1
+https://1.1.1.1:443/fmef.jpg?b=1&a=a
+https://1.1.1.1:443/?b=1&a=a
+https://1.1.1.1:443/a.js?
+https://1.1.1.1:443/a.jpg
+https://1.1.1.1:8443/
+https://1.1.1.1:443/
 $> cat test_urls.txt | godeclutter -b -c -p
 https://1.1.1.1/
 https://1.1.1.1:8443/
