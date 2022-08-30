@@ -1,5 +1,5 @@
 # godeclutter
-Declutters URLs in a flexible way, for improving input for web hacking automations such as crawlers and vulnerability scans. 
+Declutters URLs in a lightning fast and flexible way, for improving input for web hacking automations such as crawlers and vulnerability scans. 
 
 godeclutter is a very simple tool that will take a list of URLs, clean those URLs, and output the unique URLs that are present. This will reduce the number of requests you will have to make to your target website, and also filter URLs that are most likely uninteresting. 
 
