@@ -1,6 +1,8 @@
 # godeclutter
 Declutters URLs in a flexible way, for improving input for web hacking automations such as crawlers and vulnerability scans. 
 
+godeclutter is a very simple tool that will take a list of URLs, clean those URLs, and output the unique URLs that are present. This will reduce the number of requests you will have to make to your target website, and also filter URLs that are most likely uninteresting. 
+
 # Features
 godeclutter will perform the following steps on your URL host section:
 - Clean http:// URLs pointing to the default SSL port (443) and vice-versa, since they are mostly CDN error pages.
@@ -16,6 +18,8 @@ godeclutter will perform the following steps on your URL host section:
 
 
 # Install
+[insert]
+
 ```bash
 go install github.com/c3l3si4n/godeclutter@latest
 ```
