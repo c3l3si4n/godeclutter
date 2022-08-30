@@ -55,6 +55,7 @@ https://1.1.1.1:443/a.js?
 https://1.1.1.1:443/a.jpg
 https://1.1.1.1:8443/
 https://1.1.1.1:443/
+https://1.1.1.1:443/node_modules/exec.js
 arch ~>  cat test_urls.txt | godeclutter -b -c -p
 https://1.1.1.1/
 https://1.1.1.1:8443/
