@@ -28,7 +28,7 @@ go install github.com/c3l3si4n/godeclutter@HEAD
 # Basic Usage
 You can send URLs by sending them to stdin.
 ```bash
-arch ~>  cat test_urls.txt
+user@arch ~/D/g/godeclutter (main)> cat test_urls.txt 
 https://1.1.1.1:443/
 http://1.1.1.1/
 http://1.1.1.1:80/
@@ -55,8 +55,9 @@ https://1.1.1.1:443/a.js?
 https://1.1.1.1:443/a.jpg
 https://1.1.1.1:8443/
 https://1.1.1.1:443/
-https://1.1.1.1:443/node_modules/exec.js
-arch ~>  cat test_urls.txt | godeclutter -b -c -p
+https://1.1.1.1:443/node_modules/
+https://1.1.1.1:443/path/scripts/jquery.js
+user@arch ~/D/g/godeclutter (main)> cat test_urls.txt | ./godeclutter -bw -be -c -p
 https://1.1.1.1/
 https://1.1.1.1:8443/
 https://1.1.1.1/?1=1
@@ -64,9 +65,6 @@ https://1.1.1.1/?a=a&b=1
 https://1.1.1.1/a.js?a=a&b=1
 https://1.1.1.1/fiqef.html?a=a&b=1
 https://1.1.1.1/a.js
-
-arch ~> 
-arch ~> 
 ```
 
 # Arguments
