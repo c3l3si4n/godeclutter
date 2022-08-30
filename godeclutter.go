@@ -11,8 +11,8 @@ import (
 
 	"github.com/PuerkitoBio/purell"
 	"github.com/jfcg/sorty/v2"
-
 )
+
 // var strFlag = flag.String("long-string", "", "Description")
 var preferHttpsFlag = flag.Bool("p", false, "Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)")
 var normalizeURLFlag = flag.Bool("c", false, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
@@ -24,15 +24,14 @@ func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
 	var inputSlice []string
 	for scanner.Scan() {
-		inputSlice = append(inputSlice, scanner.Text() )
+		inputSlice = append(inputSlice, scanner.Text())
 	}
-	sorty.SortSlice(inputSlice);
-	for i := len(inputSlice)-1; i >= 0; i-- {
-		fmt.Println(inputSlice[i])
+	sorty.SortSlice(inputSlice)
+	for i := len(inputSlice) - 1; i >= 0; i-- {
 		c <- inputSlice[i]
-	 }
-	 
-	 close(c)
+	}
+
+	close(c)
 }
 
 func removeDuplicateStr(strSlice []string) []string {
@@ -75,6 +74,7 @@ func main() {
 	go iterInput(c)
 
 	var processedUrls []string
+	processedUrlMap := make(map[string]string)
 
 	for line := range c {
 
@@ -114,20 +114,24 @@ func main() {
 		// Prefer https
 		if *preferHttpsFlag {
 			if u.Scheme == "https" {
-				check_u, _ := url.Parse(u.String())
-				check_u.Scheme = "http"
-
-				found_index, found := stringInSlice(check_u.String(), processedUrls)
-				if found {
-					processedUrls = remove(processedUrls, found_index)
+				scheme, hostname_found := processedUrlMap[u.Host]
+				if hostname_found {
+					if scheme == "http" {
+						check_u, _ := url.Parse(u.String())
+						check_u.Scheme = "http"
+						found_index, found := stringInSlice(check_u.String(), processedUrls)
+						if found {
+							processedUrls = remove(processedUrls, found_index)
+						}
+						processedUrlMap[u.Host] = u.Scheme
+					}
+				} else {
+					processedUrlMap[u.Host] = u.Scheme
 				}
 
 			} else if u.Scheme == "http" {
-				check_u, _ := url.Parse(u.String())
-				check_u.Scheme = "https"
-
-				_, found := stringInSlice(check_u.String(), processedUrls)
-				if found {
+				_, hostname_found := processedUrlMap[u.Host]
+				if hostname_found {
 					continue
 				}
 			}
