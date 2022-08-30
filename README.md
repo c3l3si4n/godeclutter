@@ -45,4 +45,4 @@ Usage of ./godeclutter:
 # Aknowledgements
 - **[@s0md3v](https://github.com/s0md3v)** for making **[uro](https://github.com/s0md3v/uro)**
 - **[@PuerkitoBio](https://github.com/PuerkitoBio)** for making the amazing **[purell](https://github.com/PuerkitoBio/purell)** go library
-- **[@ameenmaali](https://github.com/ameenmaali) for making urldedupe which was one of the [first tools](https://github.com/ameenmaali/urldedupe) for doing that kind of work.
+- **[@ameenmaali](https://github.com/ameenmaali)** for making urldedupe which was one of the [first tools](https://github.com/ameenmaali/urldedupe) for doing that kind of work.
