@@ -16,12 +16,13 @@ import (
 var preferHttpsFlag = flag.Bool("p", false, "Prefer HTTPS - If there's a https url present, don't print the http for it. (since it will probably just redirect to https)")
 var normalizeURLFlag = flag.Bool("c", true, "Clean URLs - Aggressively clean/normalize URLs before outputting them.")
 var blacklistExtensionsFlag = flag.Bool("be", true, "Blacklist Extensions - clean some uninteresting extensions.")
+var customBlacklistExtensionsFlag = flag.String("bec", "", "Blacklist Extensions - Specify additional extensions separated by commas to be cleared along the default ones.")
+
 var blacklistWordsFlag = flag.Bool("bw", true, "Blacklist Words - clean some uninteresting words.")
+var blacklistedPresetFlag = flag.String("bwl", "minimal", "Blacklist Words - Defines the level of word blocking. Values can be: minimal,aggressive")
+var customBlacklistWordsFlag = flag.String("bwc", "", "Blacklist Words - Specify additional words separated by commas  to be cleared along the default ones.")
 
-
-var blacklistedWords = []string{"node_modules", "jquery", "bootstrap", "wp-includes"}
-var blacklistedExtensions = []string{"css", "scss", "png", "jpg", "jpeg", "img", "svg", "ico", "webp", "webm", "tif", "ttf", "tiff", "otf", "woff", "woff2", "gif", "pdf", "bmp", "eot", "mp3", "mp4", "m4a", "m4p", "avi", "flv", "swf", "eot"} 
-
+var blacklistedExtensions = []string{"css", "scss", "png", "jpg", "jpeg", "img", "svg", "ico", "webp", "webm", "tif", "ttf", "tiff", "otf", "woff", "woff2", "gif", "pdf", "bmp", "eot", "mp3", "mp4", "m4a", "m4p", "avi", "flv", "swf", "eot"}
 
 func iterInput(c chan string) {
 	scanner := bufio.NewScanner(os.Stdin)
@@ -67,6 +68,27 @@ func normalizeURL(url string) string {
 func main() {
 
 	flag.Parse()
+	var blacklistedWords []string
+
+	if *blacklistedPresetFlag == "aggressive" {
+		blacklistedWords = []string{"/node_modules/", "wp-includes", "jquery", "/bootstrap", "/webpack-runtime", "accessChatPublic"}
+	} else if *blacklistedPresetFlag == "minimal" {
+		blacklistedWords = []string{"/node_modules/", "/wp-includes/", "/jquery", "/webpack-runtime", "accessChatPublic"}
+	}
+
+	if *customBlacklistWordsFlag != "" {
+		additionalWords := strings.Split(*customBlacklistWordsFlag, ",")
+		for _, word := range additionalWords {
+			blacklistedWords = append(blacklistedWords, word)
+		}
+	}
+
+	if *customBlacklistExtensionsFlag != "" {
+		additionalExtensions := strings.Split(*customBlacklistExtensionsFlag, ",")
+		for _, extension := range additionalExtensions {
+			blacklistedExtensions = append(blacklistedExtensions, extension)
+		}
+	}
 
 	var c chan string = make(chan string)
 	go iterInput(c)
@@ -140,7 +162,7 @@ func main() {
 			for _, ext := range blacklistedExtensions {
 				if strings.HasSuffix(u.Path, ext) {
 					foundBlacklistedExtension = true
-					continue
+					break
 				}
 			}
 			if foundBlacklistedExtension {
@@ -153,7 +175,7 @@ func main() {
 			for _, word := range blacklistedWords {
 				if strings.Contains(u.Path, word) {
 					foundBlacklistedWord = true
-					continue
+					break
 				}
 			}
 			if foundBlacklistedWord {
