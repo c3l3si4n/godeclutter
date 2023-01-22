@@ -135,6 +135,7 @@ func main() {
 		if *preferHttpsFlag {
 			if u.Scheme == "https" {
 				scheme, hostname_found := processedUrlMap[u.Host]
+
 				if hostname_found {
 					if scheme == "http" {
 						check_u, _ := url.Parse(u.String())
@@ -153,6 +154,8 @@ func main() {
 				_, hostname_found := processedUrlMap[u.Host]
 				if hostname_found {
 					continue
+				} else {
+					processedUrlMap[u.Host] = u.Scheme
 				}
 			}
 		}
